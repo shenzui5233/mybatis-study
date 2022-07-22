@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.jimmmy.mybatis.study.mapper.EmployeesMapper">
+    <sql id="employee">
+        select emp_no employeeNumber,
+               birth_date birthDate,
+               first_name firstName,
+               last_name lastName,
+               gender gender,
+               hire_date hireDate
+        from employees
+    </sql>
+    <select id="queryEmployeeByCond" resultType="work.jimmmy.mybatis.study.model.Employee">
+        <include refid="employee"/>
+        <where>
+            <if test="employee.employeeNumber != null">
+                and emp_no=#{employee.employeeNumber}
+            </if>
+            <if test="employee.firstName != null and employee.firstName !=''">
+                and first_name=#{employee.firstName}
+            </if>
+            <if test="employee.lastName != null and employee.lastName != ''">
+                and last_name=#{employee.lastName}
+            </if>
+        </where>
+        limit #{limit}
+    </select>
+
+    <select id="queryEmployeeByPage" resultType="work.jimmmy.mybatis.study.model.Employee">
+        <include refid="employee"/>
+    </select>
+
+    <select id="queryEmployeeByIds" parameterType="list" resultType="work.jimmmy.mybatis.study.model.Employee">
+        <include refid="employee"/>
+        <where>
+            <foreach collection="ids" separator="," open="emp_no in (" close=")" item="id">
+                #{id}
+            </foreach>
+        </where>
+        limit #{limit}
+    </select>
+</mapper>

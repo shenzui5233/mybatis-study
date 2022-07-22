@@ -8,7 +8,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 import work.jimmmy.mybatis.study.mapper.EmployeesMapper;
+import work.jimmmy.mybatis.study.mapper.SalariesMapper;
 import work.jimmmy.mybatis.study.model.Employee;
+import work.jimmmy.mybatis.study.model.Salary;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,5 +67,39 @@ public class BasicTest {
         System.out.println("是否时最后一页：" + pageInfo.isIsLastPage());
 
         session.close();
+    }
+
+    @Test
+    public void testQuerySalaries() throws IOException {
+        InputStream is = Resources.getResourceAsStream("SqlMapConfig.xml");
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
+        SqlSession session = factory.openSession();
+        SalariesMapper mapper = session.getMapper(SalariesMapper.class);
+        PageHelper.startPage(1, 10);
+        List<Salary> salaries = mapper.queryAll(null);
+        PageInfo<Salary> salaryPageInfo = new PageInfo<>(salaries);
+        System.out.println(salaryPageInfo.getList());
+        session.close();
+    }
+
+    /**
+     * 测试1对1查询
+     * -- 查询薪水以及对应的员工信息
+     *
+     * @throws IOException Exception
+     */
+    public void testOneToOneQuery() throws IOException {
+        InputStream is = Resources.getResourceAsStream("SqlMapConfig.xml");
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
+        SqlSession session = factory.openSession();
+
+    }
+
+    public void testOneToManyQuery() {
+
+    }
+
+    public void testManyToManyQuery() {
+
     }
 }

@@ -6,9 +6,28 @@ import work.jimmmy.mybatis.study.model.Employee;
 import java.util.List;
 
 public interface EmployeesMapper {
+    /**
+     * 条件查询
+     *
+     * @param condition 查询条件
+     * @param limit 查询最大数量
+     * @return List
+     */
     List<Employee> queryEmployeeByCond(@Param("employee") Employee condition, @Param("limit") Integer limit);
 
+    /**
+     * 通过员工id查询
+     *
+     * @param ids list
+     * @param limit 查询最大数量
+     * @return List
+     */
     List<Employee> queryEmployeeByIds(@Param("ids") List<Integer> ids, @Param("limit") Integer limit);
 
+    /**
+     * 分页查询
+     *
+     * @return List
+     */
     List<Employee> queryEmployeeByPage();
 }
