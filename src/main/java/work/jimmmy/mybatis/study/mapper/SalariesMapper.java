@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface SalariesMapper {
     List<Salary> queryAll(@Param("limit") Integer limit);
+
+    List<SalaryBo> querySalariesWithEmp();
 }

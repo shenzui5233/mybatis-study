@@ -11,6 +11,7 @@ import work.jimmmy.mybatis.study.mapper.EmployeesMapper;
 import work.jimmmy.mybatis.study.mapper.SalariesMapper;
 import work.jimmmy.mybatis.study.model.Employee;
 import work.jimmmy.mybatis.study.model.Salary;
+import work.jimmmy.mybatis.study.model.SalaryBo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,11 +89,17 @@ public class BasicTest {
      *
      * @throws IOException Exception
      */
+    @Test
     public void testOneToOneQuery() throws IOException {
         InputStream is = Resources.getResourceAsStream("SqlMapConfig.xml");
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
         SqlSession session = factory.openSession();
-
+        SalariesMapper mapper = session.getMapper(SalariesMapper.class);
+        PageHelper.startPage(1, 10);
+        List<SalaryBo> salaryBoList = mapper.querySalariesWithEmp();
+        PageInfo<SalaryBo> salaryBoPageInfo = new PageInfo<>(salaryBoList);
+        System.out.println(salaryBoPageInfo.getList());
+        session.close();
     }
 
     public void testOneToManyQuery() {
