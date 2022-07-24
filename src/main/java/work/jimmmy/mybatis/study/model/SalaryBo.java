@@ -15,6 +15,6 @@ public class SalaryBo extends Salary {
     public String toString() {
         return "SalaryBo{" +
                 "employee=" + employee +
-                '}';
+                "} " + super.toString();
     }
 }

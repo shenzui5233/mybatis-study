@@ -39,4 +39,40 @@
         </where>
         limit #{limit}
     </select>
+
+
+    <resultMap id="employeeBoMap" type="employeeBo">
+        <result column="employeeNumber" property="employeeNumber"/>
+        <result column="birthDate" property="birthDate"/>
+        <result column="firstName" property="firstName"/>
+        <result column="lastName" property="lastName"/>
+        <result column="gender" property="gender"/>
+        <result column="hireDate" property="hireDate"/>
+        <collection property="salaries" ofType="Salary">
+            <id column="sempNumber" property="employeeNumber"/>
+            <result column="salary" property="salary"/>
+            <result column="fromDate" property="fromDate"/>
+            <result column="toDate" property="toDate"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryEmployeeWithSalaries" resultMap="employeeBoMap">
+        select emp.emp_no employeeNumber,
+        emp.birth_date birthDate,
+        emp.first_name firstName,
+        emp.last_name lastName,
+        emp.gender gender,
+        emp.hire_date hireDate,
+        s.emp_no sempNumber,
+        s.salary salary,
+        s.from_date fromDate,
+        s.to_date toDate
+        from (
+            select * from employees
+                <if test="limit != null and limit > 0">
+                    limit #{limit}
+            </if>) emp
+        left join salaries s
+        on emp.emp_no = s.emp_no
+    </select>
 </mapper>

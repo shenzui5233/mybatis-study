@@ -10,6 +10,7 @@ import org.junit.Test;
 import work.jimmmy.mybatis.study.mapper.EmployeesMapper;
 import work.jimmmy.mybatis.study.mapper.SalariesMapper;
 import work.jimmmy.mybatis.study.model.Employee;
+import work.jimmmy.mybatis.study.model.EmployeeBo;
 import work.jimmmy.mybatis.study.model.Salary;
 import work.jimmmy.mybatis.study.model.SalaryBo;
 
@@ -102,8 +103,15 @@ public class BasicTest {
         session.close();
     }
 
-    public void testOneToManyQuery() {
-
+    @Test
+    public void testOneToManyQuery() throws IOException {
+        InputStream is = Resources.getResourceAsStream("SqlMapConfig.xml");
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
+        SqlSession session = factory.openSession();
+        EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
+        List<EmployeeBo> employeeBoList = mapper.queryEmployeeWithSalaries(10);
+        System.out.println(employeeBoList);
+        session.close();
     }
 
     public void testManyToManyQuery() {

@@ -2,6 +2,7 @@ package work.jimmmy.mybatis.study.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import work.jimmmy.mybatis.study.model.Employee;
+import work.jimmmy.mybatis.study.model.EmployeeBo;
 
 import java.util.List;
 
@@ -30,4 +31,12 @@ public interface EmployeesMapper {
      * @return List
      */
     List<Employee> queryEmployeeByPage();
+
+    /**
+     * 查询包含薪资信息的雇员数据
+     *
+     * @param limit limit
+     * @return list
+     */
+    List<EmployeeBo> queryEmployeeWithSalaries(@Param("limit") Integer limit);
 }
