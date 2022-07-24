@@ -114,7 +114,14 @@ public class BasicTest {
         session.close();
     }
 
-    public void testManyToManyQuery() {
-
+    @Test
+    public void testManyToManyQuery() throws IOException {
+        InputStream is = Resources.getResourceAsStream("SqlMapConfig.xml");
+        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
+        SqlSession session = factory.openSession();
+        EmployeesMapper mapper = session.getMapper(EmployeesMapper.class);
+        List<EmployeeBo> employeeBoList = mapper.queryEmployeeWithDepts(10);
+        System.out.println(employeeBoList);
+        session.close();
     }
 }

@@ -39,4 +39,12 @@ public interface EmployeesMapper {
      * @return list
      */
     List<EmployeeBo> queryEmployeeWithSalaries(@Param("limit") Integer limit);
+
+    /**
+     * 查询包含部门信息的雇员数据
+     *
+     * @param limit limit
+     * @return list
+     */
+    List<EmployeeBo> queryEmployeeWithDepts(@Param("limit") Integer limit);
 }
